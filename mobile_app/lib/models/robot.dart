@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart'
     show Color, IconData, Widget, Colors, Image, Icon, Icons;
-import '../widgets/robotCard.dart';
+import '../widgets/device_card.dart';
 
 class Robot {
   String name;
@@ -26,7 +26,12 @@ class Robot {
   }
 
   Widget getCard() {
-    return RobotCard(robot: this);
+    return DeviceCard(
+      title: name,
+      subtitle: description,
+      icon: icon,
+      color: iconColor,
+    );
   }
 }
 
