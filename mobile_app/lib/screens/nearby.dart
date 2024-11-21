@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/device_set.dart';
 import '../models/robot.dart';
 
 class Nearby extends StatelessWidget {
@@ -7,21 +8,24 @@ class Nearby extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Nearby Robots'),
-        ),
-        body: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.7,
-          ),
-          itemCount: robots.length,
-          itemBuilder: (context, index) {
-            return robots[index].getCard();
-          },
-        ),
+        home: Scaffold(
+      appBar: AppBar(
+        title: const Text('Nearby Robots'),
       ),
-    );
+      body: ListView(children: [
+        DeviceSet(
+          heading: "Paired Robots",
+          robots: robots,
+        ),
+        DeviceSet(
+          heading: "Paired Devices",
+          robots: robots,
+        ),
+        DeviceSet(
+          heading: "Foreign Devices",
+          robots: robots,
+        ),
+      ]),
+    ));
   }
 }
