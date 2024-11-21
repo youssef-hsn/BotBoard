@@ -1,30 +1,29 @@
+import 'package:BotBoard/models/devices.dart';
 import 'package:flutter/material.dart'
     show Color, IconData, Widget, Colors, Image, Icon, Icons;
 import '../widgets/device_card.dart';
 
-class Robot {
-  String name;
-  final String macAddress;
-  IconData? icon;
-  Color iconColor;
+class Robot extends PairedDevice {
   String? imagePath;
-  String description;
+  String description = "A Saved Robot";
 
   Robot({
-    required this.name,
-    required this.macAddress,
-    this.icon = Icons.smart_toy,
-    this.iconColor = Colors.blue,
-    this.imagePath,
-    required this.description,
+    required super.name,
+    required super.macAddress,
+    super.icon = Icons.smart_toy,
+    super.iconColor = Colors.blue,
+    String description = "A Saved Robot",
+    String? imagePath,
   });
 
+  @override
   Widget getIcon() {
     return (imagePath != null)
         ? Image.asset(imagePath!)
         : Icon(icon, color: iconColor);
   }
 
+  @override
   Widget getCard() {
     return DeviceCard(
       title: name,
