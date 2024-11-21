@@ -10,6 +10,7 @@ class Device {
     return const Icon(
       Icons.bluetooth,
       color: Colors.grey,
+      size: 175,
     );
   }
 
@@ -39,6 +40,7 @@ class PairedDevice extends Device {
     return Icon(
       icon,
       color: iconColor,
+      size: 175,
     );
   }
 

@@ -18,8 +18,8 @@ class Robot extends PairedDevice {
   @override
   Widget getIcon() {
     return (imagePath != null)
-        ? Image.asset(imagePath!)
-        : Icon(icon, color: iconColor);
+        ? Image.asset(imagePath!, height: 175)
+        : super.getIcon();
   }
 
   @override
