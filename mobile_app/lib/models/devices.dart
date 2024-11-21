@@ -17,8 +17,7 @@ class Device {
     return DeviceCard(
       title: name,
       subtitle: "Foreign Device ($macAddress)",
-      icon: Icons.bluetooth,
-      color: Colors.grey,
+      thumbnail: getIcon(),
     );
   }
 
@@ -48,8 +47,7 @@ class PairedDevice extends Device {
     return DeviceCard(
       title: name,
       subtitle: "Paired Device ($macAddress)",
-      icon: icon,
-      color: iconColor,
+      thumbnail: getIcon(),
     );
   }
 }
