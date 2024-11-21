@@ -11,7 +11,11 @@ class Nearby extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Nearby Robots'),
         ),
-        body: ListView.builder(
+        body: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 0.7,
+          ),
           itemCount: robots.length,
           itemBuilder: (context, index) {
             return robots[index].getCard();
