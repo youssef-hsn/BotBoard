@@ -24,11 +24,18 @@ class DeviceCard extends StatelessWidget {
               children: [
                 thumbnail,
                 Text(title,
+                    maxLines: 1,
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 18)),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      overflow: TextOverflow.ellipsis,
+                    )),
                 Text(
                   subtitle,
-                  style: const TextStyle(color: Colors.grey),
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    overflow: TextOverflow.fade,
+                  ),
                   maxLines: 3,
                 ),
               ],
