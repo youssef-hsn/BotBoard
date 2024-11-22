@@ -1,5 +1,5 @@
 import 'package:BotBoard/models/devices.dart';
-import 'package:flutter/material.dart' show Widget, Colors, Image, Icon, Icons;
+import 'package:flutter/material.dart' show Widget, Colors, Image, Icons;
 import '../widgets/device_card.dart';
 
 class Robot extends PairedDevice {

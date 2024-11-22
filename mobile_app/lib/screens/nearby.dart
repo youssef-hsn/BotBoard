@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import '../widgets/device_set.dart';
+import '../models/devices.dart';
 import '../models/robot.dart';
 
 class Nearby extends StatelessWidget {
+  final List<Device> devices = [];
+  final List<PairedDevice> pairedDevices = [];
   final List<Robot> robots = dummies;
+
+  Nearby({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,15 +20,15 @@ class Nearby extends StatelessWidget {
       body: ListView(children: [
         DeviceSet(
           heading: "Paired Robots",
-          robots: robots,
+          devices: robots,
         ),
         DeviceSet(
           heading: "Paired Devices",
-          robots: robots,
+          devices: pairedDevices,
         ),
         DeviceSet(
           heading: "Foreign Devices",
-          robots: robots,
+          devices: devices,
         ),
       ]),
     ));
