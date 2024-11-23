@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
+import '../models/devices.dart';
 
 class DeviceCard extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final Widget thumbnail;
-  const DeviceCard(
-      {required this.title,
-      required this.subtitle,
-      required this.thumbnail,
-      super.key});
+  final Device device;
+  const DeviceCard({required this.device, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +17,8 @@ class DeviceCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                thumbnail,
-                Text(title,
+                device.getIcon(),
+                Text(device.name,
                     maxLines: 1,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
@@ -31,7 +26,7 @@ class DeviceCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     )),
                 Text(
-                  subtitle,
+                  device.description,
                   style: const TextStyle(
                     color: Colors.grey,
                     overflow: TextOverflow.fade,
