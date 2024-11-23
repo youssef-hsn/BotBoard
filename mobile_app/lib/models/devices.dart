@@ -6,6 +6,10 @@ class Device {
   String name;
   final String macAddress;
 
+  Device({required this.name, required this.macAddress});
+
+  String get description => "A Foreign Device with mac address $macAddress";
+
   Widget getIcon() {
     return const Icon(
       Icons.bluetooth,
@@ -17,13 +21,14 @@ class Device {
   Widget getCard() {
     return DeviceCard(device: this);
   }
-
-  Device({required this.name, required this.macAddress});
 }
 
 class PairedDevice extends Device {
   IconData icon;
   Color iconColor;
+
+  @override
+  String get description => "A Paired Device with mac address $macAddress";
 
   PairedDevice(
       {required super.name,
@@ -43,7 +48,8 @@ class PairedDevice extends Device {
 
 class Robot extends PairedDevice {
   String? imagePath;
-  String description = "A Saved Robot";
+  @override
+  String description;
 
   Robot({
     required super.name,
