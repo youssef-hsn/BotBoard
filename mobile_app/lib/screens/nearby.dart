@@ -1,12 +1,12 @@
+import 'package:BotBoard/models/dummies.dart' as sample;
 import 'package:flutter/material.dart';
 import '../widgets/device_set.dart';
 import '../models/devices.dart';
-import '../models/robot.dart';
 
 class Nearby extends StatelessWidget {
-  final List<Device> devices = [];
-  final List<PairedDevice> pairedDevices = [];
-  final List<Robot> robots = dummies;
+  final List<Device> devices = sample.devices;
+  final List<PairedDevice> pairedDevices = sample.pairedDevices;
+  final List<Robot> robots = sample.robots;
 
   Nearby({super.key});
 

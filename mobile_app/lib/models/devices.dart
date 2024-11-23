@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart'
-    show Color, IconData, Widget, Colors, Icon, Icons;
+    show Color, IconData, Widget, Colors, Icon, Icons, Image;
 import '../widgets/device_card.dart';
 
 class Device {
@@ -15,11 +15,7 @@ class Device {
   }
 
   Widget getCard() {
-    return DeviceCard(
-      title: name,
-      subtitle: "Foreign Device ($macAddress)",
-      thumbnail: getIcon(),
-    );
+    return DeviceCard(device: this);
   }
 
   Device({required this.name, required this.macAddress});
@@ -43,13 +39,25 @@ class PairedDevice extends Device {
       size: 175,
     );
   }
+}
+
+class Robot extends PairedDevice {
+  String? imagePath;
+  String description = "A Saved Robot";
+
+  Robot({
+    required super.name,
+    required super.macAddress,
+    super.icon = Icons.smart_toy,
+    super.iconColor = Colors.blue,
+    this.description = "A Saved Robot",
+    String? imagePath,
+  });
 
   @override
-  Widget getCard() {
-    return DeviceCard(
-      title: name,
-      subtitle: "Paired Device ($macAddress)",
-      thumbnail: getIcon(),
-    );
+  Widget getIcon() {
+    return (imagePath != null)
+        ? Image.asset(imagePath!, height: 175)
+        : super.getIcon();
   }
 }
