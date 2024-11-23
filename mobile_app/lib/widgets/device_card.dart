@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/device_details.dart';
 import '../models/devices.dart';
 
 class DeviceCard extends StatelessWidget {
@@ -8,7 +9,12 @@ class DeviceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DeviceDetails(device: device)));
+        },
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
