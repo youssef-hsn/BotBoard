@@ -1,7 +1,7 @@
-import 'package:BotBoard/models/dummies.dart' as sample;
 import 'package:flutter/material.dart';
-import '../widgets/device_set.dart';
-import '../models/devices.dart';
+import 'package:botboard/widgets/device_set.dart';
+import 'package:botboard/models/devices.dart';
+import 'package:botboard/models/dummies.dart' as sample;
 
 class Nearby extends StatelessWidget {
   final List<Device> devices = sample.devices;

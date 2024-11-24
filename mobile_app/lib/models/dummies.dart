@@ -1,4 +1,4 @@
-import 'package:BotBoard/models/devices.dart';
+import 'package:botboard/models/devices.dart';
 import 'package:flutter/material.dart' show Icons, Colors;
 
 List<Robot> robots = [

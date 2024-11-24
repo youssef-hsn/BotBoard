@@ -1,4 +1,4 @@
-import '../models/devices.dart';
+import 'package:botboard/models/devices.dart';
 import 'package:flutter/material.dart';
 
 class DeviceDetails extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart'
     show Color, IconData, Widget, Colors, Icon, Icons, Image;
-import '../widgets/device_card.dart';
+import 'package:botboard/widgets/device_card.dart';
 
 class Device {
   String name;
