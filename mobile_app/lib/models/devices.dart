@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart'
     show Color, IconData, Widget, Colors, Icon, Icons, Image;
 import 'package:botboard/widgets/device_card.dart';
+import 'package:flutter_blue_classic/flutter_blue_classic.dart'
+    show BluetoothDevice;
 
 class Device {
   String name;
   final String macAddress;
+  int? rssi;
 
   Device({required this.name, required this.macAddress});
+  factory Device.fromBTDevice({required BluetoothDevice device}) {
+    Device d =
+        Device(name: device.name ?? "No Name", macAddress: device.address);
+    d.rssi = device.rssi;
+    return d;
+  }
 
   String get description => "A Foreign Device with mac address $macAddress";
 

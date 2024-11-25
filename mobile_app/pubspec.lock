@@ -54,6 +54,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_blue_classic:
+    dependency: "direct main"
+    description:
+      name: flutter_blue_classic
+      sha256: ee573077a2cf6df7449bb3f9023a6e9a202a407ffca000bab519d90248c21ff4
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -131,6 +139,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.0"
+  plugin_platform_interface:
+    dependency: transitive
+    description:
+      name: plugin_platform_interface
+      sha256: "4820fbfdb9478b1ebae27888254d445073732dae3d6ea81f0b7e06d5dedc3f02"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.8"
   sky_engine:
     dependency: transitive
     description: flutter
