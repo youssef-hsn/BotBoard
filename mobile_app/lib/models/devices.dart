@@ -56,7 +56,6 @@ class PairedDevice extends Device {
 }
 
 class Robot extends PairedDevice {
-  String? imagePath;
   @override
   String description;
 
@@ -66,13 +65,5 @@ class Robot extends PairedDevice {
     super.icon = Icons.smart_toy,
     super.iconColor = Colors.blue,
     this.description = "A Saved Robot",
-    String? imagePath,
   });
-
-  @override
-  Widget getIcon() {
-    return (imagePath != null)
-        ? Image.asset(imagePath!, height: 175)
-        : super.getIcon();
-  }
 }
