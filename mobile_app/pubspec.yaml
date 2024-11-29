@@ -10,11 +10,15 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_blue_classic: ^0.0.3
+  hive:
+  hive_flutter:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  build_runner:
+  hive_generator:
 
 flutter:
   uses-material-design: true
