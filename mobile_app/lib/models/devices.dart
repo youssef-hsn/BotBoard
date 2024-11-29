@@ -54,7 +54,7 @@ class PairedDevice extends Device {
   PairedDevice(
       {required super.name,
       required super.macAddress,
-      this.icon = 0xf1eb,
+      this.icon = 57572,
       this.iconColor = 0xFF00FF00});
   @override
   factory PairedDevice.fromBTDevice({required BluetoothDevice device}) {
@@ -69,7 +69,7 @@ class PairedDevice extends Device {
   @override
   Widget getIcon() {
     return Icon(
-      IconData(icon),
+      IconData(icon, fontFamily: 'MaterialIcons'),
       color: Color(iconColor),
       size: 175,
     );
@@ -84,7 +84,7 @@ class Robot extends PairedDevice {
   Robot({
     required super.name,
     required super.macAddress,
-    super.icon = 0xe332,
+    super.icon = 58821,
     super.iconColor = 0xFF2196F3,
     this.description = "A Saved Robot",
   });
