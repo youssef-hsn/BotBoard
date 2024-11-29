@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:botboard/widgets/device_set.dart';
 import 'package:botboard/models/devices.dart';
 import 'package:flutter_blue_classic/flutter_blue_classic.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class Nearby extends StatefulWidget {
   const Nearby({super.key});
@@ -18,14 +19,12 @@ class _NearbyState extends State<Nearby> {
   BluetoothAdapterState _adapterState = BluetoothAdapterState.unknown;
   StreamSubscription? _adapterStateSubscription;
 
-  final Set<BluetoothDevice> _scanResults = {};
   StreamSubscription? _scanSubscription;
 
   bool _isScanning = false;
-  int? _connectingToIndex;
   StreamSubscription? _scanningStateSubscription;
 
-  final Set<Device> _devices = {}, pairedDevices = {}, robots = {};
+  final Set<Device> devices = {}, pairedDevices = {}, robots = {};
 
   @override
   void initState() {
@@ -36,8 +35,16 @@ class _NearbyState extends State<Nearby> {
   Future<void> initPlatformState() async {
     BluetoothAdapterState adapterState = _adapterState;
 
+    var savedDevices = await Hive.openBox('savedDevices');
+
     try {
       adapterState = await _flutterBlueClassicPlugin.adapterStateNow;
+
+      List<BluetoothDevice>? familiarDevices =
+          await _flutterBlueClassicPlugin.bondedDevices;
+      Set<String> familiarAdresses =
+          familiarDevices!.map((device) => device.address).toSet();
+
       _adapterStateSubscription =
           _flutterBlueClassicPlugin.adapterState.listen((current) {
         if (mounted) setState(() => _adapterState = current);
@@ -45,7 +52,30 @@ class _NearbyState extends State<Nearby> {
       _scanSubscription =
           _flutterBlueClassicPlugin.scanResults.listen((device) {
         if (mounted) {
-          setState(() => _devices.add(Device.fromBTDevice(device: device)));
+          setState(() {
+            if (!familiarAdresses.contains(device.address)) {
+              devices.add(Device.fromBTDevice(device: device));
+              return;
+            }
+
+            var savedDevice = savedDevices.get(device.address);
+
+            if (savedDevice == null) {
+              Device newRepresentation =
+                  PairedDevice.fromBTDevice(device: device);
+
+              savedDevices.put(device.address, newRepresentation);
+              pairedDevices.add(newRepresentation);
+              return;
+            }
+
+            savedDevice.rssi = device.rssi;
+            if (savedDevice is Robot) {
+              robots.add(savedDevice);
+              return;
+            }
+            pairedDevices.add(savedDevice);
+          });
         }
       });
       _scanningStateSubscription =
@@ -74,27 +104,40 @@ class _NearbyState extends State<Nearby> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-            appBar: AppBar(
-              title: const Text('Nearby Robots'),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Nearby Robots'),
+        ),
+        body: RefreshIndicator(
+          onRefresh: () async {
+            if (!_isScanning) {
+              devices.clear();
+              pairedDevices.clear();
+              _flutterBlueClassicPlugin.startScan();
+            }
+            setState(() {});
+
+            await Future.delayed(const Duration(milliseconds: 100));
+            while (_isScanning) {
+              await Future.delayed(const Duration(milliseconds: 100));
+            }
+          },
+          child: ListView(children: [
+            DeviceSet(
+              heading: "Robots",
+              devices: robots.toList(),
             ),
-            body: RefreshIndicator(
-              onRefresh: () async {
-                if (!_isScanning) {
-                  _devices.clear();
-                  _flutterBlueClassicPlugin.startScan();
-                }
-                setState(() {});
-                while (_isScanning) {
-                  await Future.delayed(const Duration(milliseconds: 100));
-                }
-              },
-              child: ListView(children: [
-                DeviceSet(
-                  heading: "Discovered Devices",
-                  devices: _devices.toList(),
-                )
-              ]),
-            )));
+            DeviceSet(
+              heading: "Paired Devices",
+              devices: pairedDevices.toList(),
+            ),
+            DeviceSet(
+              heading: "Foreign Devices",
+              devices: devices.toList(),
+            )
+          ]),
+        ),
+      ),
+    );
   }
 }
