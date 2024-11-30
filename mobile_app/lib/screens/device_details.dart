@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 import 'package:BotBoard/models/devices.dart';
 import 'package:BotBoard/widgets/icon_editor.dart';
+=======
+import 'package:botboard/models/devices.dart';
+>>>>>>> 4e9c6805810b728ac863ceeafb8e1d7d7748d79b
 import 'package:flutter/material.dart';
 
 class DeviceDetails extends StatelessWidget {
