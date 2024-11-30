@@ -1,4 +1,5 @@
-import '../models/devices.dart';
+import 'package:BotBoard/models/devices.dart';
+import 'package:BotBoard/widgets/icon_editor.dart';
 import 'package:flutter/material.dart';
 
 class DeviceDetails extends StatelessWidget {
@@ -9,21 +10,77 @@ class DeviceDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(device.name),
-        ),
-        body: Column(
+      appBar: AppBar(
+        title: const Text("Device Details"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              device.getIcon(),
-              Flexible(
-                  child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 16.0, 6.0, 0),
-                child: Text(device.description,
-                    style: const TextStyle(overflow: TextOverflow.fade)),
-              )),
-            ])
+            Row(
+              children: [
+                Stack(
+                  children: [
+                    device.getIcon(),
+                    device is! PairedDevice
+                        ? Container()
+                        : Positioned(
+                            top: 0,
+                            right: 0,
+                            child: IconButton(
+                              icon: const Icon(Icons.edit),
+                              onPressed: () async {
+                                // int newIcon = await showDialog(
+                                //     context: context,
+                                //     builder: (BuildContext context) =>
+                                //         IconEditor(
+                                //           selectedIcon: device.icon,
+                                //         ));
+                                // device.icon = newIcon;
+                                // TODO: Save the icon.
+                              },
+                            ),
+                          )
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(device.name,
+                        maxLines: 2,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
+                        )),
+                    Text(
+                      "Mac Address: ${device.macAddress}",
+                      maxLines: 2,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const Text("Description: ",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                )),
+            Text(device.description),
+            const Spacer(),
+            Center(
+              child: IconButton(
+                icon: Icon(
+                  device is PairedDevice ? Icons.terminal : Icons.link,
+                ),
+                iconSize: 50,
+                onPressed: () {},
+              ),
+            )
           ],
-        ));
+        ),
+      ),
+    );
   }
 }
