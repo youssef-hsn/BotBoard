@@ -28,6 +28,9 @@ class Device {
   @HiveField(3)
   String get description => "A Foreign Device with mac address $macAddress";
 
+  @HiveField(4)
+  int icon = Icons.bluetooth.codePoint;
+
   Widget getIcon() {
     return const Icon(
       Icons.bluetooth,
@@ -43,7 +46,7 @@ class Device {
 
 @HiveType(typeId: 2)
 class PairedDevice extends Device {
-  @HiveField(4)
+  @override
   int icon;
   @HiveField(5)
   int iconColor;
