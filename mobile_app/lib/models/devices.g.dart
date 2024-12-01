@@ -62,15 +62,18 @@ class PairedDeviceAdapter extends TypeAdapter<PairedDevice> {
     return PairedDevice(
       fields[0] as String,
       fields[1] as String,
-      iconColor: fields[4] as int,
+      icon: fields[4] as int,
+      iconColor: fields[5] as int,
     )..rssi = fields[2] == null ? 0 : fields[2] as int?;
   }
 
   @override
   void write(BinaryWriter writer, PairedDevice obj) {
     writer
+      ..writeByte(5)
       ..writeByte(4)
-      ..writeByte(4)
+      ..write(obj.icon)
+      ..writeByte(5)
       ..write(obj.iconColor)
       ..writeByte(0)
       ..write(obj._name)
@@ -104,15 +107,21 @@ class RobotAdapter extends TypeAdapter<Robot> {
     return Robot(
       fields[0] as String,
       fields[1] as String,
-      iconColor: fields[4] as int,
+      icon: fields[4] as int,
+      iconColor: fields[5] as int,
+      description: fields[6] as String,
     )..rssi = fields[2] == null ? 0 : fields[2] as int?;
   }
 
   @override
   void write(BinaryWriter writer, Robot obj) {
     writer
+      ..writeByte(6)
+      ..writeByte(6)
+      ..write(obj.description)
       ..writeByte(4)
-      ..writeByte(4)
+      ..write(obj.icon)
+      ..writeByte(5)
       ..write(obj.iconColor)
       ..writeByte(0)
       ..write(obj._name)

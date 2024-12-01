@@ -34,6 +34,7 @@ class Device {
   }
 
   String get description => "A Foreign Device with mac address $macAddress";
+  set description(String newDescription) {}
 
   @HiveField(3)
   int icon = Icons.bluetooth.codePoint;
@@ -53,9 +54,9 @@ class Device {
 
 @HiveType(typeId: 2)
 class PairedDevice extends Device {
-  @override
-  int icon;
   @HiveField(4)
+  int icon;
+  @HiveField(5)
   int iconColor;
 
   @override
@@ -89,7 +90,7 @@ class PairedDevice extends Device {
 
 @HiveType(typeId: 3)
 class Robot extends PairedDevice {
-  @override
+  @HiveField(6)
   String description;
 
   Robot(
