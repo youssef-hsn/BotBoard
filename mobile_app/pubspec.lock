@@ -420,17 +420,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider
-<<<<<<< HEAD
       sha256: "50c5dd5b6e1aaf6fb3a78b33f6aa3afca52bf903a8a5298f53101fdaee55bbcd"
       url: "https://pub.dev"
     source: hosted
     version: "2.1.5"
-=======
-      sha256: "909b84830485dbcd0308edf6f7368bc8fd76afa26a270420f34cabea2a6467a0"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.0"
->>>>>>> 4e9c6805810b728ac863ceeafb8e1d7d7748d79b
   path_provider_android:
     dependency: transitive
     description:
