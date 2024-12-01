@@ -3,33 +3,32 @@ import 'package:flutter/material.dart' show Icons, Colors;
 
 List<Robot> robots = [
   Robot(
-    name: "Kitchen Cooker",
-    macAddress: "macAddress",
+    "Kitchen Cooker",
+    "macAddress",
     description:
         "101-year old robot that has been in the kitchen for 100 years.",
     iconColor: Colors.lightBlue.value,
   ),
   Robot(
-    name: "Robotic Arm",
-    macAddress: "macAddress",
+    "Robotic Arm",
+    "macAddress",
     icon: Icons.precision_manufacturing.codePoint,
   ),
 ];
-
 List<Device> devices = [
-  Device(name: "Apple Pencil Two", macAddress: "A4:50:46:33:1D:4E"),
-  Device(name: "Apple Pencil One", macAddress: "A4:50:46:23:1D:5E"),
+  Device("Apple Pencil Two", "A4:50:46:33:1D:4E"),
+  Device("Apple Pencil One", "A4:50:46:23:1D:5E"),
 ];
 
 List<PairedDevice> pairedDevices = [
   PairedDevice(
-    name: "Galaxy Watch 6 Classic",
-    macAddress: "A4:50:46:23:2D:4E",
+    "Galaxy Watch 6 Classic",
+    "A4:50:46:23:2D:4E",
     icon: Icons.watch.codePoint,
   ),
   PairedDevice(
-    name: "Toyota Mercedes Radio",
-    macAddress: "A4:50:46:23:2D:5E",
+    "Toyota Mercedes Radio",
+    "A4:50:46:23:2D:5E",
     iconColor: Colors.red.value,
   ),
 ];

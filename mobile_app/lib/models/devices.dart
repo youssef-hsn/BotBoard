@@ -11,24 +11,31 @@ part 'devices.g.dart';
 @HiveType(typeId: 1)
 class Device {
   @HiveField(0)
-  String name;
+  String _name;
   @HiveField(1)
   final String macAddress;
   @HiveField(2, defaultValue: 0)
   int? rssi;
 
-  Device({required this.name, required this.macAddress});
+  String get name => _name;
+  set name(String newName) {
+    if (newName.isEmpty || _name.length > 26) {
+      newName = "Invalid Name";
+    }
+
+    _name = newName;
+  }
+
+  Device(this._name, this.macAddress);
   factory Device.fromBTDevice({required BluetoothDevice device}) {
-    Device d =
-        Device(name: device.name ?? "No Name", macAddress: device.address);
+    Device d = Device(device.name ?? "No Name", device.address);
     d.rssi = device.rssi;
     return d;
   }
 
-  @HiveField(3)
   String get description => "A Foreign Device with mac address $macAddress";
 
-  @HiveField(4)
+  @HiveField(3)
   int icon = Icons.bluetooth.codePoint;
 
   Widget getIcon() {
@@ -48,22 +55,23 @@ class Device {
 class PairedDevice extends Device {
   @override
   int icon;
-  @HiveField(5)
+  @HiveField(4)
   int iconColor;
 
   @override
   String get description => "A Paired Device with mac address $macAddress";
 
   PairedDevice(
-      {required super.name,
-      required super.macAddress,
-      this.icon = 57572,
-      this.iconColor = 0xFF00FF00});
+    super._name,
+    super.macAddress, {
+    this.icon = 57572,
+    this.iconColor = 0xFF00FF00,
+  });
   @override
   factory PairedDevice.fromBTDevice({required BluetoothDevice device}) {
     PairedDevice d = PairedDevice(
-      name: device.name ?? "No Name",
-      macAddress: device.address,
+      device.name ?? "No Name",
+      device.address,
     );
     d.rssi = device.rssi;
     return d;
@@ -84,9 +92,9 @@ class Robot extends PairedDevice {
   @override
   String description;
 
-  Robot({
-    required super.name,
-    required super.macAddress,
+  Robot(
+    super._name,
+    super.macAddress, {
     super.icon = 58821,
     super.iconColor = 0xFF2196F3,
     this.description = "A Saved Robot",

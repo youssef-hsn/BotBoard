@@ -17,24 +17,24 @@ class DeviceAdapter extends TypeAdapter<Device> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Device(
-      name: fields[0] as String,
-      macAddress: fields[1] as String,
-    )..rssi = fields[2] == null ? 0 : fields[2] as int?;
+      fields[0] as String,
+      fields[1] as String,
+    )
+      ..rssi = fields[2] == null ? 0 : fields[2] as int?
+      ..icon = fields[3] as int;
   }
 
   @override
   void write(BinaryWriter writer, Device obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(4)
       ..writeByte(0)
-      ..write(obj.name)
+      ..write(obj._name)
       ..writeByte(1)
       ..write(obj.macAddress)
       ..writeByte(2)
       ..write(obj.rssi)
       ..writeByte(3)
-      ..write(obj.description)
-      ..writeByte(4)
       ..write(obj.icon);
   }
 
@@ -60,9 +60,9 @@ class PairedDeviceAdapter extends TypeAdapter<PairedDevice> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return PairedDevice(
-      name: fields[0] as String,
-      macAddress: fields[1] as String,
-      iconColor: fields[5] as int,
+      fields[0] as String,
+      fields[1] as String,
+      iconColor: fields[4] as int,
     )..rssi = fields[2] == null ? 0 : fields[2] as int?;
   }
 
@@ -70,10 +70,10 @@ class PairedDeviceAdapter extends TypeAdapter<PairedDevice> {
   void write(BinaryWriter writer, PairedDevice obj) {
     writer
       ..writeByte(4)
-      ..writeByte(5)
+      ..writeByte(4)
       ..write(obj.iconColor)
       ..writeByte(0)
-      ..write(obj.name)
+      ..write(obj._name)
       ..writeByte(1)
       ..write(obj.macAddress)
       ..writeByte(2)
@@ -102,9 +102,9 @@ class RobotAdapter extends TypeAdapter<Robot> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Robot(
-      name: fields[0] as String,
-      macAddress: fields[1] as String,
-      iconColor: fields[5] as int,
+      fields[0] as String,
+      fields[1] as String,
+      iconColor: fields[4] as int,
     )..rssi = fields[2] == null ? 0 : fields[2] as int?;
   }
 
@@ -112,10 +112,10 @@ class RobotAdapter extends TypeAdapter<Robot> {
   void write(BinaryWriter writer, Robot obj) {
     writer
       ..writeByte(4)
-      ..writeByte(5)
+      ..writeByte(4)
       ..write(obj.iconColor)
       ..writeByte(0)
-      ..write(obj.name)
+      ..write(obj._name)
       ..writeByte(1)
       ..write(obj.macAddress)
       ..writeByte(2)
