@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
 
 class IconEditor extends StatelessWidget {
-  int selectedIcon;
-  IconEditor({
-    required this.selectedIcon,
-    super.key,
-  });
+  final int selectedIcon;
+  const IconEditor(this.selectedIcon, {super.key});
 
   @override
   Widget build(BuildContext context) {
     final List<IconData> iconOptions = [
       Icons.smart_toy,
-      Icons.bluetooth,
+      Icons.android,
+      Icons.hardware,
       Icons.devices,
-      Icons.headset,
-      Icons.speaker,
-      Icons.phone_android,
+      Icons.settings_remote,
+      Icons.miscellaneous_services,
+      Icons.bluetooth_connected,
+      Icons.wifi,
+      Icons.cast_connected,
+      Icons.construction,
+      Icons.precision_manufacturing,
+      Icons.handyman,
+      Icons.face,
+      Icons.emoji_objects,
+      Icons.toys,
+      Icons.watch,
     ];
 
     return AlertDialog(
@@ -32,7 +39,7 @@ class IconEditor extends StatelessWidget {
                 size: 50,
               ),
               onTap: () {
-                selectedIcon = option.codePoint;
+                Navigator.pop(context, option.codePoint);
               },
             );
           }).toList(),
@@ -41,10 +48,6 @@ class IconEditor extends StatelessWidget {
           TextButton(
             child: const Text('Cancel'),
             onPressed: () => Navigator.pop(context),
-          ),
-          TextButton(
-            child: const Text('Save'),
-            onPressed: () => Navigator.pop(context, selectedIcon),
           )
         ]);
   }
