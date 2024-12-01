@@ -82,6 +82,8 @@ class _NearbyState extends State<Nearby> {
           _flutterBlueClassicPlugin.isScanning.listen((isScanning) {
         if (mounted) setState(() => _isScanning = isScanning);
       });
+
+      _flutterBlueClassicPlugin.startScan();
     } catch (e) {
       print(e);
     }
@@ -108,35 +110,57 @@ class _NearbyState extends State<Nearby> {
         appBar: AppBar(
           title: const Text('Nearby Robots'),
         ),
-        body: RefreshIndicator(
-          onRefresh: () async {
-            if (!_isScanning) {
-              devices.clear();
-              pairedDevices.clear();
-              _flutterBlueClassicPlugin.startScan();
-            }
-            setState(() {});
+        body: _adapterState == BluetoothAdapterState.on
+            ? RefreshIndicator(
+                onRefresh: () async {
+                  if (!_isScanning) {
+                    devices.clear();
+                    pairedDevices.clear();
+                    robots.clear();
+                    _flutterBlueClassicPlugin.startScan();
+                  }
+                  setState(() {});
 
-            await Future.delayed(const Duration(milliseconds: 100));
-            while (_isScanning) {
-              await Future.delayed(const Duration(milliseconds: 100));
-            }
-          },
-          child: ListView(children: [
-            DeviceSet(
-              heading: "Robots",
-              devices: robots.toList(),
-            ),
-            DeviceSet(
-              heading: "Paired Devices",
-              devices: pairedDevices.toList(),
-            ),
-            DeviceSet(
-              heading: "Foreign Devices",
-              devices: devices.toList(),
-            )
-          ]),
-        ),
+                  await Future.delayed(const Duration(milliseconds: 100));
+                  while (_isScanning) {
+                    await Future.delayed(const Duration(milliseconds: 100));
+                  }
+                },
+                child: ListView(children: [
+                  DeviceSet(
+                    heading: "Robots",
+                    devices: robots.toList(),
+                  ),
+                  DeviceSet(
+                    heading: "Paired Devices",
+                    devices: pairedDevices.toList(),
+                  ),
+                  DeviceSet(
+                    heading: "Foreign Devices",
+                    devices: devices.toList(),
+                  )
+                ]),
+              )
+            : Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Bluetooth is ${_adapterState.toString().split('.').last}',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      child: const Text('Turn on'),
+                      onPressed: () {
+                        _flutterBlueClassicPlugin.turnOn();
+                      },
+                    )
+                  ],
+                ),
+              ),
       ),
     );
   }
