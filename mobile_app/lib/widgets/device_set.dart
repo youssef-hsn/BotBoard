@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class DeviceSet extends StatelessWidget {
   final String heading;
-  final List<Device> devices;
+  final Set<Device> devices;
 
   const DeviceSet({
     required this.heading,
@@ -43,7 +43,7 @@ class DeviceSet extends StatelessWidget {
                   ),
                   itemCount: devices.length,
                   itemBuilder: (context, index) {
-                    return devices[index].getCard();
+                    return devices.elementAt(index).getCard();
                   },
                 ),
               ],

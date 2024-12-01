@@ -129,15 +129,15 @@ class _NearbyState extends State<Nearby> {
                 child: ListView(children: [
                   DeviceSet(
                     heading: "Robots",
-                    devices: robots.toList(),
+                    devices: robots,
                   ),
                   DeviceSet(
                     heading: "Paired Devices",
-                    devices: pairedDevices.toList(),
+                    devices: pairedDevices,
                   ),
                   DeviceSet(
                     heading: "Foreign Devices",
-                    devices: devices.toList(),
+                    devices: devices,
                   )
                 ]),
               )

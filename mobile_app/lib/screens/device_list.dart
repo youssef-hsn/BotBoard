@@ -10,8 +10,8 @@ class DeviceList extends StatelessWidget {
   Widget build(BuildContext context) {
     var box = Hive.box('savedDevices');
 
-    List<Robot> robots = [];
-    List<PairedDevice> pairedDevices = [];
+    Set<Robot> robots = {};
+    Set<PairedDevice> pairedDevices = {};
 
     for (var device in box.values) {
       if (device is PairedDevice) {
