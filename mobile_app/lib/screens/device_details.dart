@@ -1,16 +1,18 @@
-<<<<<<< HEAD
-import 'package:BotBoard/models/devices.dart';
-import 'package:BotBoard/widgets/icon_editor.dart';
-=======
+import 'package:botboard/widgets/icon_editor.dart';
 import 'package:botboard/models/devices.dart';
->>>>>>> 4e9c6805810b728ac863ceeafb8e1d7d7748d79b
+import 'package:botboard/widgets/text_editor.dart';
 import 'package:flutter/material.dart';
 
-class DeviceDetails extends StatelessWidget {
+class DeviceDetails extends StatefulWidget {
   final Device device;
 
   const DeviceDetails({required this.device, super.key});
 
+  @override
+  State<DeviceDetails> createState() => _DeviceDetailsState();
+}
+
+class _DeviceDetailsState extends State<DeviceDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,8 +28,8 @@ class DeviceDetails extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    device.getIcon(),
-                    device is! PairedDevice
+                    widget.device.getIcon(),
+                    widget.device is! PairedDevice
                         ? Container()
                         : Positioned(
                             top: 0,
@@ -35,14 +37,14 @@ class DeviceDetails extends StatelessWidget {
                             child: IconButton(
                               icon: const Icon(Icons.edit),
                               onPressed: () async {
-                                // int newIcon = await showDialog(
-                                //     context: context,
-                                //     builder: (BuildContext context) =>
-                                //         IconEditor(
-                                //           selectedIcon: device.icon,
-                                //         ));
-                                // device.icon = newIcon;
-                                // TODO: Save the icon.
+                                int newIcon = await showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        IconEditor(
+                                          widget.device.icon,
+                                        ));
+                                widget.device.icon = newIcon;
+                                setState(() {});
                               },
                             ),
                           )
@@ -51,32 +53,62 @@ class DeviceDetails extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(device.name,
-                        maxLines: 2,
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          overflow: TextOverflow.ellipsis,
-                        )),
+                    GestureDetector(
+                      onTap: () async {
+                        if (widget.device is! PairedDevice) return;
+                        widget.device.name = await showDialog(
+                            context: context,
+                            builder: (BuildContext context) => TextEditor(
+                                  title: "Edit Device Name",
+                                  text: widget.device.name,
+                                ));
+                        setState(() {});
+                      },
+                      child: Text(widget.device.name,
+                          maxLines: 2,
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.ellipsis,
+                          )),
+                    ),
                     Text(
-                      "Mac Address: ${device.macAddress}",
+                      "Mac Address: ${widget.device.macAddress}",
                       maxLines: 2,
                     ),
                   ],
                 ),
               ],
             ),
-            const Text("Description: ",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                )),
-            Text(device.description),
+            GestureDetector(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text("Description: ",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      )),
+                  Text(widget.device.description),
+                ],
+              ),
+              onTap: () async {
+                if (widget.device is Robot) {
+                  widget.device.description = await showDialog(
+                      context: context,
+                      builder: (BuildContext context) => TextEditor(
+                            title: "Edit Description",
+                            text: widget.device.description,
+                          ));
+                  setState(() {});
+                }
+              },
+            ),
             const Spacer(),
             Center(
               child: IconButton(
                 icon: Icon(
-                  device is PairedDevice ? Icons.terminal : Icons.link,
+                  widget.device is PairedDevice ? Icons.terminal : Icons.link,
                 ),
                 iconSize: 50,
                 onPressed: () {},
