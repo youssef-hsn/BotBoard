@@ -50,33 +50,35 @@ class _DeviceDetailsState extends State<DeviceDetails> {
                           )
                   ],
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      onTap: () async {
-                        if (widget.device is! PairedDevice) return;
-                        widget.device.name = await showDialog(
-                            context: context,
-                            builder: (BuildContext context) => TextEditor(
-                                  title: "Edit Device Name",
-                                  text: widget.device.name,
-                                ));
-                        setState(() {});
-                      },
-                      child: Text(widget.device.name,
-                          maxLines: 2,
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            overflow: TextOverflow.ellipsis,
-                          )),
-                    ),
-                    Text(
-                      "Mac Address: ${widget.device.macAddress}",
-                      maxLines: 2,
-                    ),
-                  ],
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
+                          if (widget.device is! PairedDevice) return;
+                          widget.device.name = await showDialog(
+                              context: context,
+                              builder: (BuildContext context) => TextEditor(
+                                    title: "Edit Device Name",
+                                    text: widget.device.name,
+                                  ));
+                          setState(() {});
+                        },
+                        child: Text(widget.device.name,
+                            maxLines: 2,
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              overflow: TextOverflow.ellipsis,
+                            )),
+                      ),
+                      Text(
+                        "Mac Address: ${widget.device.macAddress}",
+                        maxLines: 2,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
