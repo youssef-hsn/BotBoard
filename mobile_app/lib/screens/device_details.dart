@@ -144,20 +144,18 @@ class _DeviceDetailsState extends State<DeviceDetails> {
                 iconSize: 50,
                 onPressed: () async {
                   if (widget.device is Robot) {
-                    BluetoothConnection? connection =
-                        await _flutterBlueClassicPlugin
-                            .connect(widget.device.macAddress);
-                    if (connection is BluetoothConnection) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BluetoothTerminal(
-                              widget.device,
-                              connection,
-                            ),
-                          ));
-                      return;
-                    }
+                    // BluetoothConnection? connection =
+                    //     await _flutterBlueClassicPlugin
+                    // .connect(widget.device.macAddress);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BluetoothTerminal(
+                            widget.device,
+                            null,
+                          ),
+                        ));
+                    return;
                   }
 
                   Box<dynamic> box = Hive.box('savedDevices');
@@ -174,8 +172,16 @@ class _DeviceDetailsState extends State<DeviceDetails> {
                     box.put(widget.device.macAddress, robot);
                     Navigator.of(context).pop();
                   } else {
-                    await _flutterBlueClassicPlugin
-                        .bondDevice(widget.device.macAddress);
+                    // await _flutterBlueClassicPlugin
+                    //     .bondDevice(widget.device.macAddress);
+                    await box.put(
+                        widget.device.macAddress,
+                        PairedDevice(
+                          widget.device.name,
+                          widget.device.macAddress,
+                          icon: widget.device.icon,
+                          iconColor: widget.device.iconColor,
+                        ));
                   }
                 },
               ),

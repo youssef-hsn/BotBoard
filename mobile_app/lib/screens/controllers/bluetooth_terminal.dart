@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class BluetoothTerminal extends StatefulWidget {
   final Device device;
-  final BluetoothConnection connection;
+  final BluetoothConnection? connection;
   const BluetoothTerminal(this.device, this.connection, {super.key});
 
   @override
@@ -19,17 +19,17 @@ class _BluetoothTerminalState extends State<BluetoothTerminal> {
   @override
   void initState() {
     super.initState();
-    widget.connection.input?.listen((input) {
-      messages.add(Message(
-          IconData(widget.device.icon, fontFamily: 'MaterialIcons'),
-          input.toString()));
-      setState(() {});
-    });
+    // widget.connection.input?.listen((input) {
+    //   messages.add(Message(
+    //       IconData(widget.device.icon, fontFamily: 'MaterialIcons'),
+    //       input.toString()));
+    //   setState(() {});
+    // });
   }
 
   @override
   void dispose() {
-    widget.connection.dispose();
+    // widget.connection.dispose();
     super.dispose();
   }
 
@@ -37,6 +37,13 @@ class _BluetoothTerminalState extends State<BluetoothTerminal> {
     if (m.isEmpty) return;
     messages.add(Message(Icons.arrow_right, m));
     message = "";
+
+    if (widget.connection == null) {
+      messages.add(Message(
+        IconData(widget.device.icon, fontFamily: 'MaterialIcons'),
+        "I recieved a message: '$m' from you!",
+      ));
+    }
     setState(() {});
   }
 

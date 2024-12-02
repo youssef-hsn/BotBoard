@@ -3,6 +3,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:botboard/widgets/device_set.dart';
 import 'package:botboard/models/devices.dart' show PairedDevice, Robot;
 
+import 'package:botboard/models/dummies.dart' as dummy;
+
 class DeviceList extends StatelessWidget {
   const DeviceList({super.key});
 
@@ -10,8 +12,8 @@ class DeviceList extends StatelessWidget {
   Widget build(BuildContext context) {
     var box = Hive.box('savedDevices');
 
-    Set<Robot> robots = {};
-    Set<PairedDevice> pairedDevices = {};
+    Set<Robot> robots = dummy.robots.toSet();
+    Set<PairedDevice> pairedDevices = dummy.pairedDevices.toSet();
 
     for (var device in box.values) {
       if (device is Robot) {
