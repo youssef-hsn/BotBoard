@@ -56,7 +56,17 @@ class _DeviceDetailsState extends State<DeviceDetails> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          if (widget.device is! PairedDevice) return;
+                          if (widget.device is! PairedDevice) {
+                            await showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    const AlertDialog(
+                                        title:
+                                            Text("The Device must Be Paired"),
+                                        content: Text(
+                                            "You can't edit the name of a foreign device.")));
+                            return;
+                          }
                           widget.device.name = await showDialog(
                               context: context,
                               builder: (BuildContext context) => TextEditor(
@@ -103,6 +113,15 @@ class _DeviceDetailsState extends State<DeviceDetails> {
                             text: widget.device.description,
                           ));
                   setState(() {});
+                } else {
+                  await showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                            title: const Text("Device Must be a Robot!"),
+                            content: Text(widget.device is PairedDevice
+                                ? "Just click the upgrade button below."
+                                : "Pair the device then upgrade it to a robot"),
+                          ));
                 }
               },
             ),
