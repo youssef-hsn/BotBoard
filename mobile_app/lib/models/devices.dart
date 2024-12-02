@@ -39,6 +39,8 @@ class Device {
   @HiveField(3)
   int icon = Icons.bluetooth.codePoint;
 
+  get iconColor => Colors.grey.value;
+
   Widget getIcon() {
     return const Icon(
       Icons.bluetooth,

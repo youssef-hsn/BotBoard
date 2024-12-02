@@ -1,7 +1,11 @@
+import 'package:botboard/screens/controllers/bluetooth_terminal.dart';
 import 'package:botboard/widgets/icon_editor.dart';
 import 'package:botboard/models/devices.dart';
 import 'package:botboard/widgets/text_editor.dart';
+import 'package:botboard/widgets/upgrade_paired_device.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blue_classic/flutter_blue_classic.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class DeviceDetails extends StatefulWidget {
   final Device device;
@@ -13,6 +17,8 @@ class DeviceDetails extends StatefulWidget {
 }
 
 class _DeviceDetailsState extends State<DeviceDetails> {
+  final _flutterBlueClassicPlugin = FlutterBlueClassic();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,10 +135,49 @@ class _DeviceDetailsState extends State<DeviceDetails> {
             Center(
               child: IconButton(
                 icon: Icon(
-                  widget.device is PairedDevice ? Icons.terminal : Icons.link,
+                  widget.device is Robot
+                      ? Icons.terminal
+                      : widget.device is PairedDevice
+                          ? Icons.arrow_upward
+                          : Icons.link,
                 ),
                 iconSize: 50,
-                onPressed: () {},
+                onPressed: () async {
+                  if (widget.device is Robot) {
+                    BluetoothConnection? connection =
+                        await _flutterBlueClassicPlugin
+                            .connect(widget.device.macAddress);
+                    if (connection is BluetoothConnection) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BluetoothTerminal(
+                              widget.device,
+                              connection,
+                            ),
+                          ));
+                      return;
+                    }
+                  }
+
+                  Box<dynamic> box = Hive.box('savedDevices');
+
+                  if (widget.device is PairedDevice) {
+                    String description = await showDialog(
+                        context: context,
+                        builder: (BuildContext context) => UpgradePairedDevice(
+                              widget.device,
+                            ));
+                    Robot robot = Robot(
+                        widget.device.name, widget.device.macAddress,
+                        description: description, icon: widget.device.icon);
+                    box.put(widget.device.macAddress, robot);
+                    Navigator.of(context).pop();
+                  } else {
+                    await _flutterBlueClassicPlugin
+                        .bondDevice(widget.device.macAddress);
+                  }
+                },
               ),
             )
           ],
