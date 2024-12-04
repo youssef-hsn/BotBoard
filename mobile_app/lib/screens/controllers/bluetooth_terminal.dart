@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:botboard/models/devices.dart';
 import 'package:botboard/widgets/chat/message.dart';
 import 'package:botboard/widgets/chat/message_list.dart';
@@ -36,6 +38,7 @@ class _BluetoothTerminalState extends State<BluetoothTerminal> {
   void sendMessage(String m) {
     if (m.isEmpty) return;
     messages.add(Message(Icons.arrow_right, m));
+    widget.connection.output.add(utf8.encode(m));
     message = "";
     setState(() {});
   }
