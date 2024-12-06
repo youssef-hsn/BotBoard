@@ -38,7 +38,7 @@ class _BluetoothTerminalState extends State<BluetoothTerminal> {
   void sendMessage(String m) {
     if (m.isEmpty) return;
     messages.add(Message(Icons.arrow_right, m));
-    widget.connection.output.add(utf8.encode(m));
+    // widget.connection.output.add(utf8.encode(m));
     message = "";
 
     if (widget.connection == null) {
