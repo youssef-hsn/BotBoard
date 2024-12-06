@@ -39,7 +39,7 @@ class _NearbyState extends State<Nearby> {
   Future<void> initPlatformState() async {
     BluetoothAdapterState adapterState = _adapterState;
 
-    var savedDevices = await Hive.openBox('savedDevices');
+    var savedDevices = Hive.box('savedDevices');
 
     try {
       adapterState = await _flutterBlueClassicPlugin.adapterStateNow;
@@ -142,6 +142,7 @@ class _NearbyState extends State<Nearby> {
                   DeviceSet(
                     heading: "Foreign Devices",
                     devices: devices,
+                    hidable: true,
                   )
                 ]),
               )
