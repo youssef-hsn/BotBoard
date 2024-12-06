@@ -3,8 +3,20 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:botboard/widgets/device_set.dart';
 import 'package:botboard/models/devices.dart' show PairedDevice, Robot;
 
-class DeviceList extends StatelessWidget {
+class DeviceList extends StatefulWidget {
   const DeviceList({super.key});
+
+  @override
+  State<DeviceList> createState() => _DeviceListState();
+}
+
+class _DeviceListState extends State<DeviceList> {
+  final List<String> _options = ["All", "Robots", "Paired Devices"];
+  String _selectedDevices = "All";
+
+  bool shouldBeShown(String setName) {
+    return _selectedDevices == "All" || _selectedDevices == setName;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +35,32 @@ class DeviceList extends StatelessWidget {
 
     return (MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Registered Robots'),
-        ),
+        appBar: AppBar(title: const Text('Registered Robots'), actions: [
+          DropdownButton(
+              value: _selectedDevices,
+              items: _options
+                  .map((option) =>
+                      DropdownMenuItem(value: option, child: Text(option)))
+                  .toList(),
+              onChanged: (v) => {
+                    setState(() {
+                      _selectedDevices = v!;
+                    })
+                  }),
+        ]),
         body: ListView(children: [
-          DeviceSet(
-            heading: "Robots",
-            devices: robots,
-          ),
-          DeviceSet(
-            heading: "Paired Devices",
-            devices: pairedDevices,
-          ),
+          shouldBeShown("Robots")
+              ? DeviceSet(
+                  heading: "Robots",
+                  devices: robots,
+                )
+              : Container(),
+          shouldBeShown("Paired Devices")
+              ? DeviceSet(
+                  heading: "Paired Devices",
+                  devices: pairedDevices,
+                )
+              : Container(),
         ]),
       ),
     ));
