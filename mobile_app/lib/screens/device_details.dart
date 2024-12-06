@@ -146,20 +146,18 @@ class _DeviceDetailsState extends State<DeviceDetails> {
                 iconSize: 50,
                 onPressed: () async {
                   if (widget.device is Robot) {
-                    BluetoothConnection? connection =
-                        await _flutterBlueClassicPlugin
-                            .connect(widget.device.macAddress);
-                    if (connection is BluetoothConnection) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BluetoothTerminal(
-                              widget.device,
-                              connection,
-                            ),
-                          ));
-                      return;
-                    }
+                    // BluetoothConnection? connection =
+                    //     await _flutterBlueClassicPlugin
+                    // .connect(widget.device.macAddress);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BluetoothTerminal(
+                            widget.device,
+                            null,
+                          ),
+                        ));
+                    return;
                   }
 
                   Box<dynamic> box = Hive.box('savedDevices');
@@ -184,8 +182,7 @@ class _DeviceDetailsState extends State<DeviceDetails> {
                       builder: (BuildContext context) => PairForeign(),
                     );
                     if (description != null && description.isEmpty) return;
-                    bool success = await _flutterBlueClassicPlugin
-                        .bondDevice(widget.device.macAddress);
+                    bool success = true;
                     if (description != null && success) {
                       Robot robot = Robot(
                         widget.device.name,
@@ -196,6 +193,14 @@ class _DeviceDetailsState extends State<DeviceDetails> {
                       box.put(widget.device.macAddress, robot);
                       Navigator.of(context).pop();
                     }
+                    await box.put(
+                        widget.device.macAddress,
+                        PairedDevice(
+                          widget.device.name,
+                          widget.device.macAddress,
+                          icon: widget.device.icon,
+                          iconColor: widget.device.iconColor,
+                        ));
                   }
                 },
               ),

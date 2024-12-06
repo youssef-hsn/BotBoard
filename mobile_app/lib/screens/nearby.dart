@@ -6,6 +6,8 @@ import 'package:botboard/models/devices.dart';
 import 'package:flutter_blue_classic/flutter_blue_classic.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'package:botboard/models/dummies.dart' as dummy;
+
 class Nearby extends StatefulWidget {
   const Nearby({super.key});
 
@@ -24,7 +26,9 @@ class _NearbyState extends State<Nearby> {
   bool _isScanning = false;
   StreamSubscription? _scanningStateSubscription;
 
-  final Set<Device> devices = {}, pairedDevices = {}, robots = {};
+  final Set<Device> devices = dummy.devices.toSet(),
+      pairedDevices = {dummy.pairedDevices[0]},
+      robots = dummy.robots.toSet();
 
   @override
   void initState() {
@@ -114,9 +118,9 @@ class _NearbyState extends State<Nearby> {
             ? RefreshIndicator(
                 onRefresh: () async {
                   if (!_isScanning) {
-                    devices.clear();
-                    pairedDevices.clear();
-                    robots.clear();
+                    // devices.clear();
+                    // pairedDevices.clear();
+                    // robots.clear();
                     _flutterBlueClassicPlugin.startScan();
                   }
                   setState(() {});
