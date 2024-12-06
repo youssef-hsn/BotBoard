@@ -10,7 +10,8 @@ void main() async {
   Hive.registerAdapter(RobotAdapter());
   Hive.registerAdapter(PairedDeviceAdapter());
 
-  await Hive.openBox('savedDevices');
+  var s = await Hive.openBox('savedDevices');
+  s.clear();
 
   runApp(const MainApp());
 }

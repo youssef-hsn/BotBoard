@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blue_classic/flutter_blue_classic.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../widgets/alerts/pair_foreign.dart';
+
 class DeviceDetails extends StatefulWidget {
   final Device device;
 
@@ -169,13 +171,31 @@ class _DeviceDetailsState extends State<DeviceDetails> {
                               widget.device,
                             ));
                     Robot robot = Robot(
-                        widget.device.name, widget.device.macAddress,
-                        description: description, icon: widget.device.icon);
+                      widget.device.name,
+                      widget.device.macAddress,
+                      description: description,
+                      icon: widget.device.icon,
+                    );
                     box.put(widget.device.macAddress, robot);
                     Navigator.of(context).pop();
                   } else {
-                    await _flutterBlueClassicPlugin
+                    String? description = await showDialog(
+                      context: context,
+                      builder: (BuildContext context) => PairForeign(),
+                    );
+                    if (description != null && description.isEmpty) return;
+                    bool success = await _flutterBlueClassicPlugin
                         .bondDevice(widget.device.macAddress);
+                    if (description != null && success) {
+                      Robot robot = Robot(
+                        widget.device.name,
+                        widget.device.macAddress,
+                        description: description,
+                        icon: widget.device.icon,
+                      );
+                      box.put(widget.device.macAddress, robot);
+                      Navigator.of(context).pop();
+                    }
                   }
                 },
               ),
