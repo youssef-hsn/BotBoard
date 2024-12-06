@@ -138,6 +138,7 @@ class _NearbyState extends State<Nearby> {
                   DeviceSet(
                     heading: "Foreign Devices",
                     devices: devices,
+                    hidable: true,
                   )
                 ]),
               )
