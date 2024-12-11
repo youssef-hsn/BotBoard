@@ -23,7 +23,10 @@ class DeviceCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                device.getIcon(),
+                Hero(
+                  tag: "icon-${device.macAddress}",
+                  child: device.getIcon(),
+                ),
                 Text(device.name,
                     maxLines: 1,
                     style: const TextStyle(

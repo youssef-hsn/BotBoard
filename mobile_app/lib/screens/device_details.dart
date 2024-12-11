@@ -36,7 +36,10 @@ class _DeviceDetailsState extends State<DeviceDetails> {
               children: [
                 Stack(
                   children: [
-                    widget.device.getIcon(),
+                    Hero(
+                      tag: "icon-${widget.device.macAddress}",
+                      child: widget.device.getIcon(),
+                    ),
                     widget.device is! PairedDevice
                         ? Container()
                         : Positioned(
