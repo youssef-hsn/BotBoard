@@ -1,0 +1,24 @@
+name: botboard
+description: "BotBoard is a Bluetooth-based control dashboard for robotics, enabling users to discover, group, and manage robotic devices. Create and customize control setups with widgets, and deploy them to connected devices through an intuitive interface."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_blue_classic: ^0.0.3
+  hive:
+  hive_flutter:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  build_runner:
+  hive_generator:
+
+flutter:
+  uses-material-design: true
