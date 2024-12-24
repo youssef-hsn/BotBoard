@@ -11,9 +11,11 @@ class UpgradePairedDevice extends StatelessWidget {
     return AlertDialog(
       title: const Text('Upgrade Paired Device'),
       content: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           const Text('Are you sure you want to upgrade this device?'),
           TextField(
+            maxLines: null,
             decoration: const InputDecoration(
               hintText: "Enter a description for this device (optional)",
             ),
