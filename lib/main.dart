@@ -29,31 +29,36 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: Colors.blue,
+          ),
+        ),
         home: Scaffold(
-      bottomNavigationBar: NavigationBar(
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.search),
-            label: 'Nearby',
-            selectedIcon: Icon(Icons.search),
+          bottomNavigationBar: NavigationBar(
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(Icons.search),
+                label: 'Nearby',
+                selectedIcon: Icon(Icons.search),
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.list),
+                label: 'Devices',
+                selectedIcon: Icon(Icons.list),
+              ),
+            ],
+            onDestinationSelected: (value) {
+              setState(() {
+                currentIndex = value;
+              });
+            },
+            selectedIndex: currentIndex,
           ),
-          NavigationDestination(
-            icon: Icon(Icons.list),
-            label: 'Devices',
-            selectedIcon: Icon(Icons.list),
-          ),
-        ],
-        onDestinationSelected: (value) {
-          setState(() {
-            currentIndex = value;
-          });
-        },
-        selectedIndex: currentIndex,
-      ),
-      body: [
-        const Nearby(),
-        const DeviceList(),
-      ][currentIndex],
-    ));
+          body: [
+            const Nearby(),
+            const DeviceList(),
+          ][currentIndex],
+        ));
   }
 }
