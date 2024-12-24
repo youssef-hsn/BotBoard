@@ -19,7 +19,7 @@ class IconEditor extends StatelessWidget {
       Icons.construction,
       Icons.precision_manufacturing,
       Icons.handyman,
-      Icons.face,
+      Icons.bluetooth,
       Icons.emoji_objects,
       Icons.toys,
       Icons.watch,
