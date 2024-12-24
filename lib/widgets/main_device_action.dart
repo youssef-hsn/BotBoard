@@ -29,12 +29,10 @@ class MainDeviceAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      child: Icon(
-        _getDeviceIcon(),
-      ),
-      onPressed: () async {
-        if (widget.device is Robot) {
+    if (widget.device is Robot) {
+      return FloatingActionButton(
+        child: const Icon(Icons.terminal),
+        onPressed: () async {
           BluetoothConnection? connection =
               await _flutterBlueClassicPlugin.connect(widget.device.macAddress);
           if (connection is BluetoothConnection) {
@@ -46,10 +44,17 @@ class MainDeviceAction extends StatelessWidget {
                     connection,
                   ),
                 ));
-            return;
           }
-        }
+        },
+      );
+    }
 
+    return FloatingActionButton(
+      backgroundColor: widget.device is PairedDevice ? Colors.green : null,
+      child: Icon(
+        widget.device is PairedDevice ? Icons.arrow_upward : Icons.link,
+      ),
+      onPressed: () async {
         Box<dynamic> box = Hive.box('savedDevices');
 
         if (widget.device is PairedDevice) {
