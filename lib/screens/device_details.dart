@@ -1,6 +1,7 @@
 import 'package:botboard/screens/controllers/bluetooth_terminal.dart';
 import 'package:botboard/widgets/alerts/icon_editor.dart';
 import 'package:botboard/models/devices.dart';
+import 'package:botboard/widgets/alerts/pick_color.dart';
 import 'package:botboard/widgets/alerts/text_editor.dart';
 import 'package:botboard/widgets/alerts/upgrade_paired_device.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,15 @@ class _DeviceDetailsState extends State<DeviceDetails> {
                                         IconEditor(
                                           widget.device.icon,
                                         ));
+                                int newColor = await showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        ColorPickerAlert(
+                                          baseColor:
+                                              Color(widget.device.iconColor),
+                                        ));
                                 widget.device.icon = newIcon;
+                                widget.device.iconColor = newColor;
                                 setState(() {});
                               },
                             ),

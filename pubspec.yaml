@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_blue_classic: ^0.0.3
+  flutter_colorpicker: ^1.1.0
   hive:
   hive_flutter:
 
