@@ -33,36 +33,34 @@ class _DeviceListState extends State<DeviceList> {
       }
     }
 
-    return (MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Registered Robots'), actions: [
-          DropdownButton(
-              value: _selectedDevices,
-              items: _options
-                  .map((option) =>
-                      DropdownMenuItem(value: option, child: Text(option)))
-                  .toList(),
-              onChanged: (v) => {
-                    setState(() {
-                      _selectedDevices = v!;
-                    })
-                  }),
-        ]),
-        body: ListView(children: [
-          shouldBeShown("Robots")
-              ? DeviceSet(
-                  heading: "Robots",
-                  devices: robots,
-                )
-              : Container(),
-          shouldBeShown("Paired Devices")
-              ? DeviceSet(
-                  heading: "Paired Devices",
-                  devices: pairedDevices,
-                )
-              : Container(),
-        ]),
-      ),
-    ));
+    return Scaffold(
+      appBar: AppBar(title: const Text('Registered Robots'), actions: [
+        DropdownButton(
+            value: _selectedDevices,
+            items: _options
+                .map((option) =>
+                    DropdownMenuItem(value: option, child: Text(option)))
+                .toList(),
+            onChanged: (v) => {
+                  setState(() {
+                    _selectedDevices = v!;
+                  })
+                }),
+      ]),
+      body: ListView(children: [
+        shouldBeShown("Robots")
+            ? DeviceSet(
+                heading: "Robots",
+                devices: robots,
+              )
+            : Container(),
+        shouldBeShown("Paired Devices")
+            ? DeviceSet(
+                heading: "Paired Devices",
+                devices: pairedDevices,
+              )
+            : Container(),
+      ]),
+    );
   }
 }

@@ -105,64 +105,62 @@ class _NearbyState extends State<Nearby> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Nearby Robots'),
-        ),
-        body: _adapterState == BluetoothAdapterState.on
-            ? RefreshIndicator(
-                onRefresh: () async {
-                  if (!_isScanning) {
-                    devices.clear();
-                    pairedDevices.clear();
-                    robots.clear();
-                    _flutterBlueClassicPlugin.startScan();
-                  }
-                  setState(() {});
-
-                  await Future.delayed(const Duration(milliseconds: 100));
-                  while (_isScanning) {
-                    await Future.delayed(const Duration(milliseconds: 100));
-                  }
-                },
-                child: ListView(children: [
-                  DeviceSet(
-                    heading: "Robots",
-                    devices: robots,
-                  ),
-                  DeviceSet(
-                    heading: "Paired Devices",
-                    devices: pairedDevices,
-                  ),
-                  DeviceSet(
-                    heading: "Foreign Devices",
-                    devices: devices,
-                    hidable: true,
-                  )
-                ]),
-              )
-            : Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Bluetooth is ${_adapterState.toString().split('.').last}',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    TextButton(
-                      child: const Text('Turn on'),
-                      onPressed: () {
-                        _flutterBlueClassicPlugin.turnOn();
-                      },
-                    )
-                  ],
-                ),
-              ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Nearby Robots'),
       ),
+      body: _adapterState == BluetoothAdapterState.on
+          ? RefreshIndicator(
+              onRefresh: () async {
+                if (!_isScanning) {
+                  devices.clear();
+                  pairedDevices.clear();
+                  robots.clear();
+                  _flutterBlueClassicPlugin.startScan();
+                }
+                setState(() {});
+
+                await Future.delayed(const Duration(milliseconds: 100));
+                while (_isScanning) {
+                  await Future.delayed(const Duration(milliseconds: 100));
+                }
+              },
+              child: ListView(children: [
+                DeviceSet(
+                  heading: "Robots",
+                  devices: robots,
+                ),
+                DeviceSet(
+                  heading: "Paired Devices",
+                  devices: pairedDevices,
+                ),
+                DeviceSet(
+                  heading: "Foreign Devices",
+                  devices: devices,
+                  hidable: true,
+                )
+              ]),
+            )
+          : Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Bluetooth is ${_adapterState.toString().split('.').last}',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  TextButton(
+                    child: const Text('Turn on'),
+                    onPressed: () {
+                      _flutterBlueClassicPlugin.turnOn();
+                    },
+                  )
+                ],
+              ),
+            ),
     );
   }
 }
