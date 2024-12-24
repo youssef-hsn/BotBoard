@@ -3,7 +3,9 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class ColorPickerAlert extends StatefulWidget {
   final baseColor;
-  const ColorPickerAlert({super.key, this.baseColor});
+  final Icon previewIcon;
+  const ColorPickerAlert(
+      {super.key, this.baseColor, required this.previewIcon});
 
   @override
   State<ColorPickerAlert> createState() => _ColorPickerAlertState();
@@ -22,8 +24,9 @@ class _ColorPickerAlertState extends State<ColorPickerAlert> {
   Widget build(BuildContext context) {
     return AlertDialog(
         title: const Text('Pick a color'),
-        content: SingleChildScrollView(
-          child: ColorPicker(
+        content: Column(mainAxisSize: MainAxisSize.min, children: [
+          Icon(widget.previewIcon.icon, color: selectedColor, size: 100),
+          ColorPicker(
             pickerColor: selectedColor,
             onColorChanged: (Color color) {
               setState(() {
@@ -32,7 +35,7 @@ class _ColorPickerAlertState extends State<ColorPickerAlert> {
             },
             pickerAreaHeightPercent: 0.8,
           ),
-        ),
+        ]),
         actions: [
           TextButton(
             child: const Text('CANCEL'),

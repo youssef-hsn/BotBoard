@@ -61,6 +61,10 @@ class _DeviceDetailsState extends State<DeviceDetails> {
                                         ColorPickerAlert(
                                           baseColor:
                                               Color(widget.device.iconColor),
+                                          previewIcon: newIcon == 0
+                                              ? const Icon(Icons.bluetooth)
+                                              : Icon(IconData(newIcon,
+                                                  fontFamily: 'MaterialIcons')),
                                         ));
                                 widget.device.icon = newIcon;
                                 widget.device.iconColor = newColor;
