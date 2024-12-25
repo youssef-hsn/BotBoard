@@ -33,6 +33,10 @@ class _MainAppState extends State<MainApp> {
 
   var prefrences = Hive.box('preferences');
 
+  void setMainState() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -74,7 +78,7 @@ class _MainAppState extends State<MainApp> {
           body: [
             const Nearby(),
             const DeviceList(),
-            const SettingsView()
+            SettingsView(setMainState),
           ][currentIndex],
         ));
   }

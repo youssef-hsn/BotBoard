@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class SettingsView extends StatefulWidget {
-  const SettingsView({super.key});
+  final Function setMainState;
+  const SettingsView(this.setMainState, {super.key});
 
   @override
   State<SettingsView> createState() => _SettingsViewState();
@@ -27,6 +28,7 @@ class _SettingsViewState extends State<SettingsView> {
                 'theme',
                 prefrences.get('theme') == 'light' ? 'dark' : 'light',
               );
+              widget.setMainState();
               setState(() {});
             },
             trailing: Icon(prefrences.get('theme') == 'light'
