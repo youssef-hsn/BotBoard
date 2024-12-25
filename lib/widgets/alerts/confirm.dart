@@ -8,7 +8,7 @@ class ConfirmationAlert extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text("Confirmation Needed."),
-      content: Text(consequences + "\nDo you want to proceed?"),
+      content: Text("$consequences\nDo you want to proceed?"),
       actions: [
         TextButton(
           onPressed: () {

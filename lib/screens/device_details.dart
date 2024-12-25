@@ -2,7 +2,7 @@ import 'package:botboard/widgets/alerts/icon_editor.dart';
 import 'package:botboard/models/devices.dart';
 import 'package:botboard/widgets/alerts/pick_color.dart';
 import 'package:botboard/widgets/alerts/text_editor.dart';
-import 'package:botboard/widgets/main_device_action.dart';
+import 'package:botboard/widgets/device_controlls/device_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_classic/flutter_blue_classic.dart';
 
@@ -146,10 +146,17 @@ class _DeviceDetailsState extends State<DeviceDetails> {
               },
             ),
             const Spacer(),
-            Center(
-              child: MainDeviceAction(
-                  widget: widget,
-                  flutterBlueClassicPlugin: _flutterBlueClassicPlugin),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 24, 40),
+              child: Row(
+                children: [
+                  const Spacer(),
+                  DeviceActions(
+                    widget: widget,
+                    flutterBlueClassicPlugin: _flutterBlueClassicPlugin,
+                  ),
+                ],
+              ),
             )
           ],
         ),
