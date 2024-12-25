@@ -28,7 +28,7 @@ class DeviceActions extends StatelessWidget {
           widget.device is PairedDevice
               ? IconButton(
                   icon: Icon(
-                    Icons.cancel,
+                    Icons.refresh,
                     color: Theme.of(context).colorScheme.onSecondary,
                   ),
                   onPressed: () => null,

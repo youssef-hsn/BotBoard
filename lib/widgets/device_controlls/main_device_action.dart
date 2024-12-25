@@ -52,7 +52,7 @@ class MainDeviceAction extends StatelessWidget {
     return FloatingActionButton(
       backgroundColor: widget.device is PairedDevice ? Colors.green : null,
       child: Icon(
-        widget.device is PairedDevice ? Icons.arrow_upward : Icons.link,
+        widget.device is PairedDevice ? Icons.upgrade : Icons.link,
       ),
       onPressed: () async {
         Box<dynamic> box = Hive.box('savedDevices');
