@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:http/http.dart' as http;
+import 'package:botboard/models/routines.dart' show registerApp;
 import 'package:botboard/models/devices.dart';
 import 'package:botboard/screens/nearby.dart';
 import 'package:botboard/screens/routines.dart';
@@ -34,6 +37,48 @@ class _MainAppState extends State<MainApp> {
   int currentIndex = 0;
 
   Box prefrences = Hive.box('preferences');
+
+  @override
+  void initState() {
+    super.initState();
+
+    int? id = prefrences.get("appIdentifier");
+    if (id == null) {
+      generateCredentials();
+    }
+    getJWT();
+  }
+
+  Future<void> generateCredentials() async {
+    Map credentials = await registerApp(
+      "${prefrences.get('apiHost')}/api/applications",
+      "Robot Master", // Default username.
+    );
+    prefrences.put("username", "Robot Master");
+    prefrences.put("appIdentifier", credentials["id"]);
+    prefrences.put("appSecret", credentials["secret"]);
+    setState(() {});
+  }
+
+  Future<void> getJWT() async {
+    final response = await http.post(
+      Uri.parse("${prefrences.get('apiHost')}/api/login"),
+      body: {
+        "app_id": "${prefrences.get("appIdentifier")}",
+        "app_secret": prefrences.get("appSecret"),
+      },
+    );
+    if (response.statusCode == 200) {
+      String jwt = jsonDecode(response.body)["token"];
+      prefrences.put(
+        "JWT",
+        jwt,
+      );
+      setState(() {});
+    } else {
+      print("Failed to get JWT");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
