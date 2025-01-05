@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:botboard/models/devices.dart';
 import 'package:botboard/screens/nearby.dart';
+import 'package:botboard/screens/routines.dart';
 import 'package:botboard/screens/device_list.dart';
 import 'package:botboard/screens/settings.dart';
 
@@ -17,6 +18,7 @@ void main() async {
   if (!prefrences.containsKey('theme')) {
     prefrences.put('theme', 'light');
   }
+  prefrences.put('apiHost', 'https://botboard.tech');
 
   runApp(const MainApp());
 }
@@ -31,7 +33,7 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   int currentIndex = 0;
 
-  var prefrences = Hive.box('preferences');
+  Box prefrences = Hive.box('preferences');
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +61,11 @@ class _MainAppState extends State<MainApp> {
                 selectedIcon: Icon(Icons.list),
               ),
               NavigationDestination(
+                icon: Icon(Icons.check_box_outlined),
+                label: 'Routines',
+                selectedIcon: Icon(Icons.check_box),
+              ),
+              NavigationDestination(
                 icon: Icon(Icons.settings_outlined),
                 label: "Settings",
                 selectedIcon: Icon(Icons.settings),
@@ -74,6 +81,7 @@ class _MainAppState extends State<MainApp> {
           body: [
             const Nearby(),
             const DeviceList(),
+            const RoutinesView(),
             SettingsView(setState),
           ][currentIndex],
         ));
