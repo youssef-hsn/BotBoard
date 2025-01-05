@@ -16,6 +16,7 @@ void main() async {
   Hive.registerAdapter(PairedDeviceAdapter());
 
   await Hive.openBox('savedDevices');
+  await Hive.openBox('deviceMappings');
 
   var prefrences = await Hive.openBox('preferences');
   if (!prefrences.containsKey('theme')) {
