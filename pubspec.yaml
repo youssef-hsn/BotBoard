@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  http: ^0.13.3
   flutter_blue_classic: ^0.0.3
   flutter_colorpicker: ^1.1.0
   hive:
