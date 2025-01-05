@@ -1,5 +1,6 @@
 import 'package:botboard/models/devices.dart';
 import 'package:botboard/screens/device_details.dart';
+import 'package:botboard/screens/create_routine.dart';
 import 'package:botboard/widgets/alerts/confirm.dart';
 import 'package:botboard/widgets/device_controlls/main_device_action.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,23 @@ class DeviceActions extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
+          widget.device is PairedDevice
+              ? IconButton(
+                  icon: Icon(
+                    Icons.add_task,
+                    color: Theme.of(context).colorScheme.onSecondary,
+                  ),
+                  onPressed: () => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CreateRoutineView(
+                              widget.device,
+                            ),
+                          ),
+                        )
+                      })
+              : Container(),
           widget.device is PairedDevice
               ? IconButton(
                   icon: Icon(
