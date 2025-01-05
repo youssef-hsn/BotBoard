@@ -142,6 +142,7 @@ class _CreateRoutineViewState extends State<CreateRoutineView> {
                 if (res.statusCode == 200) {
                   deviceID = jsonDecode(res.body)["device_id"];
                   deviceMapping.put(widget.device.macAddress, deviceID);
+                  deviceMapping.put(deviceID, widget.device.macAddress);
                 } else if (res.statusCode == 401) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
