@@ -22,7 +22,20 @@ class _SettingsViewState extends State<SettingsView> {
       body: ListView(
         children: [
           ListTile(
-            title: const Text("App Theme "),
+            title: const Text("API Host"),
+            subtitle: Text(prefrences.get('apiHost')),
+            trailing: Icon(
+              Icons.api,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+          const ListTile(
+            title: const Text("App Identifier"),
+            // onTap: () { TODO: Regenerate app identifier },
+            trailing: const Icon(Icons.refresh),
+          ),
+          ListTile(
+            title: const Text("App Theme"),
             onTap: () {
               prefrences.put(
                 'theme',

@@ -40,20 +40,7 @@ class _RoutinesViewState extends State<RoutinesView> {
       ),
       body: apiUp
           ? ListView(
-              children: [
-                ListTile(
-                  title: const Text("Routine 1"),
-                  subtitle: const Text("This is a routine"),
-                ),
-                ListTile(
-                  title: const Text("Routine 2"),
-                  subtitle: const Text("This is a routine"),
-                ),
-                ListTile(
-                  title: const Text("Routine 3"),
-                  subtitle: const Text("This is a routine"),
-                ),
-              ],
+              children: [],
             )
           : const Center(
               child: Text("Failed to connect to API"),
