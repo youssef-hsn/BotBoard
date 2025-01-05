@@ -4,16 +4,21 @@ import 'package:botboard/models/devices.dart';
 
 class DeviceCard extends StatelessWidget {
   final Device device;
-  const DeviceCard({required this.device, super.key});
+  final bool tapable;
+  const DeviceCard({this.tapable = true, required this.device, super.key});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
+          if (!tapable) {
+            return;
+          }
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => DeviceDetails(device: device)));
+            context,
+            MaterialPageRoute(
+                builder: (context) => DeviceDetails(device: device)),
+          );
         },
         child: Card(
           shape:

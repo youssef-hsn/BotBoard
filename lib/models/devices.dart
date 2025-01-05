@@ -50,8 +50,8 @@ class Device {
     );
   }
 
-  Widget getCard() {
-    return DeviceCard(device: this);
+  Widget getCard({bool tappable = true}) {
+    return DeviceCard(device: this, tapable: tappable);
   }
 }
 
