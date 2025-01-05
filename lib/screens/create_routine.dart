@@ -142,6 +142,13 @@ class _CreateRoutineViewState extends State<CreateRoutineView> {
                 if (res.statusCode == 200) {
                   deviceID = jsonDecode(res.body)["device_id"];
                   deviceMapping.put(widget.device.macAddress, deviceID);
+                } else if (res.statusCode == 401) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                          "Unauthorized! you must regenerate JWT in settings."),
+                    ),
+                  );
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
