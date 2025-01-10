@@ -21,6 +21,7 @@ class _RoutinesViewState extends State<RoutinesView> {
   var routines = [];
 
   void getRoutines() async {
+    routines = [];
     try {
       final response = await http.get(
         Uri.parse('${prefrences.get('apiHost')}/api/routines/all'),
@@ -36,14 +37,16 @@ class _RoutinesViewState extends State<RoutinesView> {
 
         result.forEach((routine) {
           String day = "Today";
-          print(routine["last_done"]);
           if (routine["last_done"] != null) {
             DateTime lastDone = DateTime.parse(routine["last_done"]);
             DateTime now = DateTime.now();
             Duration difference = now.difference(lastDone);
-            if (difference.inDays > routine["frequency"]) {
-              day = (lastDone.add(Duration(days: routine["frequency"])))
-                  .toString();
+            if (difference.inDays < routine["frequency"]) {
+              DateTime nextTime =
+                  lastDone.add(Duration(days: routine["frequency"]));
+              day = "${nextTime.day.toString().padLeft(2, '0')}"
+                  "/${nextTime.month.toString().padLeft(2, '0')}"
+                  "/${nextTime.year}";
             }
           }
 
@@ -54,12 +57,18 @@ class _RoutinesViewState extends State<RoutinesView> {
           }
         });
 
-        dayRoutines.forEach((day, todo) {
+        List<String> days = dayRoutines.keys.toList()..sort();
+        if (days.contains("Today")) {
+          days.remove("Today");
+          days.insert(0, "Today");
+        }
+
+        for (var day in days) {
           routines.add(day);
-          for (var routine in todo) {
+          for (var routine in dayRoutines[day]!) {
             routines.add(routine);
           }
-        });
+        }
       } else {
         routines = [];
       }
@@ -155,19 +164,15 @@ class _RoutinesViewState extends State<RoutinesView> {
                           IconButton(
                             icon: const Icon(Icons.check_circle),
                             onPressed: () async {
-                              routines[index]["last_done"] =
-                                  DateTime.now().toIso8601String();
-                              setState(() {});
-
-                              await http.put(
-                                Uri.parse(
-                                    '${prefrences.get('apiHost')}/api/routines/${routines[index]["id"]}'),
-                                headers: {
-                                  'Authorization':
-                                      'Bearer ${prefrences.get('JWT')}',
-                                },
-                                body: jsonEncode(routines[index]),
-                              );
+                              await http.patch(
+                                  Uri.parse(
+                                      '${prefrences.get('apiHost')}/api/routines'
+                                      '/${routines[index]["routine_id"]}/done'),
+                                  headers: {
+                                    'Authorization':
+                                        'Bearer ${prefrences.get('JWT')}',
+                                  });
+                              getRoutines();
                             },
                           ),
                         ],
