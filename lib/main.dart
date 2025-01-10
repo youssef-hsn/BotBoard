@@ -22,7 +22,7 @@ void main() async {
   if (!prefrences.containsKey('theme')) {
     prefrences.put('theme', 'light');
   }
-  prefrences.put('apiHost', 'http://10.0.2.2:8000');
+  prefrences.put('apiHost', 'https://botboard.com');
 
   runApp(const MainApp());
 }
