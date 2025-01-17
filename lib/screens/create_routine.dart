@@ -34,7 +34,7 @@ class _CreateRoutineViewState extends State<CreateRoutineView> {
       appBar: AppBar(
         title: const Text("Create Routine"),
       ),
-      body: Column(
+      body: ListView(
         children: [
           Center(
             child: SizedBox(
@@ -56,38 +56,40 @@ class _CreateRoutineViewState extends State<CreateRoutineView> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                TextField(
-                  controller: titleController,
-                  decoration: const InputDecoration(
-                    labelText: 'Title',
-                  ),
-                ),
-                TextField(
-                  controller: descriptionController,
-                  decoration: const InputDecoration(
-                    labelText: 'Description',
-                  ),
-                  maxLines: 3,
-                ),
-                Row(
-                  children: [
-                    const Text('Every'),
-                    const SizedBox(
-                      width: 8,
+            child: Expanded(
+              child: Column(
+                children: [
+                  TextField(
+                    controller: titleController,
+                    decoration: const InputDecoration(
+                      labelText: 'Title',
                     ),
-                    SizedBox(
-                      width: 30,
-                      child: TextField(
-                        controller: intervalController,
-                        keyboardType: TextInputType.number,
+                  ),
+                  TextField(
+                    controller: descriptionController,
+                    decoration: const InputDecoration(
+                      labelText: 'Description',
+                    ),
+                    maxLines: 3,
+                  ),
+                  Row(
+                    children: [
+                      const Text('Every'),
+                      const SizedBox(
+                        width: 8,
                       ),
-                    ),
-                    const Text('days'),
-                  ],
-                ),
-              ],
+                      SizedBox(
+                        width: 30,
+                        child: TextField(
+                          controller: intervalController,
+                          keyboardType: TextInputType.number,
+                        ),
+                      ),
+                      const Text('days'),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           ElevatedButton(
