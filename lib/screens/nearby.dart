@@ -4,7 +4,6 @@ import 'package:botboard/widgets/device_set.dart';
 import 'package:botboard/models/devices.dart';
 import 'package:flutter_blue_classic/flutter_blue_classic.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:botboard/models/dummies.dart' as dummies;
 
 class Nearby extends StatefulWidget {
   const Nearby({super.key});
@@ -24,9 +23,7 @@ class _NearbyState extends State<Nearby> {
   bool _isScanning = false;
   StreamSubscription? _scanningStateSubscription;
 
-  final Set<Device> devices = dummies.devices.toSet(),
-      pairedDevices = dummies.pairedDevices.toSet(),
-      robots = {dummies.robots[0]};
+  final Set<Device> devices = {}, pairedDevices = {}, robots = {};
 
   @override
   void initState() {
