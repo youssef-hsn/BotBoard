@@ -82,11 +82,11 @@ class PairedDevice extends Device {
   }
 
   @override
-  Widget getIcon() {
+  Widget getIcon({double size = 175}) {
     return Icon(
       IconData(icon, fontFamily: 'MaterialIcons'),
       color: Color(iconColor),
-      size: 175,
+      size: size,
     );
   }
 }
