@@ -4,14 +4,14 @@ import 'package:flutter/material.dart' show Icons, Colors;
 List<Robot> robots = [
   Robot(
     "Kitchen Cooker",
-    "macAddress",
+    "macAddress1",
     description:
         "101-year old robot that has been in the kitchen for 100 years.",
     iconColor: Colors.lightBlue.value,
   ),
   Robot(
     "Robotic Arm",
-    "macAddress",
+    "macAddress2",
     icon: Icons.precision_manufacturing.codePoint,
   ),
 ];
