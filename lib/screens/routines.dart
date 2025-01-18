@@ -20,6 +20,11 @@ class _RoutinesViewState extends State<RoutinesView> {
 
   var routines = [];
 
+  PairedDevice getDevice(int deviceID) {
+    String deviceMac = deviceMappings.get(deviceID);
+    return savedDevices.get(deviceMac) as PairedDevice;
+  }
+
   void getRoutines() async {
     routines = [];
     try {
@@ -128,39 +133,28 @@ class _RoutinesViewState extends State<RoutinesView> {
                     return ListTile(
                       title: Text(routines[index]["title"]),
                       subtitle: Text(routines[index]["description"]),
+                      leading: GestureDetector(
+                        child: Column(
+                          children: [
+                            Hero(
+                              tag:
+                                  "icon-${deviceMappings.get(routines[index]["device_id"])}",
+                              child: getDevice(routines[index]["device_id"])
+                                  .getIcon(size: 50),
+                            ),
+                          ],
+                        ),
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DeviceDetails(
+                                  device:
+                                      getDevice(routines[index]["device_id"]))),
+                        ),
+                      ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          IconButton(
-                            icon: const Icon(Icons.question_mark),
-                            onPressed: () {
-                              String? deviceMac = deviceMappings.get(
-                                routines[index]["device_id"],
-                              );
-
-                              if (deviceMac == null) {
-                                print(
-                                    'Device MAC not found for device_id: ${routines[index]["device_id"]}');
-                                return;
-                              }
-
-                              PairedDevice? device =
-                                  savedDevices.get(deviceMac);
-
-                              if (device == null) {
-                                print(
-                                    'Paired device not found for MAC address: $deviceMac');
-                                return;
-                              }
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      DeviceDetails(device: device),
-                                ),
-                              );
-                            },
-                          ),
                           IconButton(
                             icon: const Icon(Icons.check_circle),
                             onPressed: () async {
