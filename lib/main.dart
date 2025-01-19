@@ -22,6 +22,11 @@ void main() async {
   if (!prefrences.containsKey('theme')) {
     prefrences.put('theme', 'light');
   }
+
+  if (!prefrences.containsKey('macaddressBlurring')) {
+    prefrences.put('macaddressBlurring', true);
+  }
+
   prefrences.put('apiHost', 'https://botboard.tech');
 
   runApp(const MainApp());

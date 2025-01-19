@@ -5,6 +5,7 @@ import 'package:botboard/widgets/alerts/text_editor.dart';
 import 'package:botboard/widgets/device_controlls/device_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_classic/flutter_blue_classic.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class DeviceDetails extends StatefulWidget {
   final Device device;
@@ -17,6 +18,8 @@ class DeviceDetails extends StatefulWidget {
 
 class _DeviceDetailsState extends State<DeviceDetails> {
   final _flutterBlueClassicPlugin = FlutterBlueClassic();
+
+  final prefrences = Hive.box('preferences');
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +107,7 @@ class _DeviceDetailsState extends State<DeviceDetails> {
                             )),
                       ),
                       Text(
-                        "Mac Address: ${widget.device.macAddress}",
+                        "Mac Address: ${prefrences.get('macaddressBlurring') ? "(Set to Blurred)" : widget.device.macAddress}",
                         maxLines: 2,
                       ),
                     ],

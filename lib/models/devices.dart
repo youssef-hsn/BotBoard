@@ -5,7 +5,7 @@ import 'package:flutter/material.dart'
 import 'package:botboard/widgets/device_card.dart';
 import 'package:flutter_blue_classic/flutter_blue_classic.dart'
     show BluetoothDevice;
-
+import 'package:hive_flutter/hive_flutter.dart';
 part 'devices.g.dart';
 
 @HiveType(typeId: 1)
@@ -33,7 +33,16 @@ class Device {
     return d;
   }
 
-  String get description => "A Foreign Device with mac address $macAddress";
+  String get description {
+    String displayMacAddress = macAddress;
+
+    if (Hive.box('preferences').get('macaddressBlurring')) {
+      displayMacAddress = "**:**:**:**:**: ${macAddress.substring(12)}";
+    }
+
+    return "A Foreign Device with mac address $displayMacAddress";
+  }
+
   set description(String newDescription) {}
 
   @HiveField(3)
@@ -63,7 +72,15 @@ class PairedDevice extends Device {
   int iconColor;
 
   @override
-  String get description => "A Paired Device with mac address $macAddress";
+  String get description {
+    String displayMacAddress = macAddress;
+
+    if (Hive.box('preferences').get('macaddressBlurring')) {
+      displayMacAddress = "**:**:**:**:**: ${macAddress.substring(12)}";
+    }
+
+    return "A Paired Device with mac address $displayMacAddress";
+  }
 
   PairedDevice(
     super._name,

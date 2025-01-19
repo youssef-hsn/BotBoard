@@ -150,6 +150,32 @@ class _SettingsViewState extends State<SettingsView> {
                 : Icons.dark_mode),
           ),
           ListTile(
+              title: const Text("Macaddress Blurring"),
+              subtitle: Text(prefrences.get("macaddressBlurring")
+                  ? "This will show macaddresses"
+                  : "This will hide macaddresses"),
+              onTap: () async {
+                bool previous = prefrences.get("macaddressBlurring");
+                bool confirmed = false;
+
+                if (previous) {
+                  // if previously blurred
+                  confirmed = await showDialog(
+                    context: context,
+                    builder: (BuildContext context) => const ConfirmationAlert(
+                      consequences:
+                          "Macaddresses will be shown! This is not recommended if you are recording.",
+                    ),
+                  );
+                }
+
+                prefrences.put("macaddressBlurring", !confirmed);
+                setState(() {});
+              },
+              trailing: Icon(prefrences.get("macaddressBlurring")
+                  ? Icons.visibility_off
+                  : Icons.visibility)),
+          ListTile(
             title: const Text(
               "Clear Memory",
               style: TextStyle(
