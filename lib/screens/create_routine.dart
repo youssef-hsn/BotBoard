@@ -56,40 +56,38 @@ class _CreateRoutineViewState extends State<CreateRoutineView> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Expanded(
-              child: Column(
-                children: [
-                  TextField(
-                    controller: titleController,
-                    decoration: const InputDecoration(
-                      labelText: 'Title',
+            child: Column(
+              children: [
+                TextField(
+                  controller: titleController,
+                  decoration: const InputDecoration(
+                    labelText: 'Title',
+                  ),
+                ),
+                TextField(
+                  controller: descriptionController,
+                  decoration: const InputDecoration(
+                    labelText: 'Description',
+                  ),
+                  maxLines: 3,
+                ),
+                Row(
+                  children: [
+                    const Text('Every'),
+                    const SizedBox(
+                      width: 8,
                     ),
-                  ),
-                  TextField(
-                    controller: descriptionController,
-                    decoration: const InputDecoration(
-                      labelText: 'Description',
+                    SizedBox(
+                      width: 30,
+                      child: TextField(
+                        controller: intervalController,
+                        keyboardType: TextInputType.number,
+                      ),
                     ),
-                    maxLines: 3,
-                  ),
-                  Row(
-                    children: [
-                      const Text('Every'),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      SizedBox(
-                        width: 30,
-                        child: TextField(
-                          controller: intervalController,
-                          keyboardType: TextInputType.number,
-                        ),
-                      ),
-                      const Text('days'),
-                    ],
-                  ),
-                ],
-              ),
+                    const Text('days'),
+                  ],
+                ),
+              ],
             ),
           ),
           ElevatedButton(
@@ -181,6 +179,7 @@ class _CreateRoutineViewState extends State<CreateRoutineView> {
               if (res.statusCode == 200) {
                 Navigator.pop(context);
               } else {
+                print(deviceID);
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text("Failed to create routine"),

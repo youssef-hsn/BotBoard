@@ -107,7 +107,7 @@ class _DeviceDetailsState extends State<DeviceDetails> {
                             )),
                       ),
                       Text(
-                        "Mac Address: ${prefrences.get('macaddressBlurring') ? "(Set to Blurred)" : widget.device.macAddress}",
+                        "Mac Address: ${prefrences.get('macaddressBlurring') ? "(Blurred)\nReview Settings" : widget.device.macAddress}",
                         maxLines: 2,
                       ),
                     ],

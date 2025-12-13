@@ -4,6 +4,7 @@ import 'package:botboard/widgets/device_set.dart';
 import 'package:botboard/models/devices.dart';
 import 'package:flutter_blue_classic/flutter_blue_classic.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:botboard/models/dummies.dart' as dummies;
 
 class Nearby extends StatefulWidget {
   const Nearby({super.key});
